@@ -1,0 +1,8 @@
+
+from python
+
+WORKDIR /app
+
+copy . /app
+
+CMD [ "python", "rng.py" ]
