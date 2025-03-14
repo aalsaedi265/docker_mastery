@@ -110,3 +110,9 @@ docker network disconnect my-network container1
 Inspect network:
 
 docker network inspect my-network
+
+## docker compose
+
+docker-compose up # runs file to make containers & images, -d for detach mode   
+docker-compose down #shuts it down but does not remove volumes, -v to do it though
+

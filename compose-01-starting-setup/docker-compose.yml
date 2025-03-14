@@ -1,0 +1,35 @@
+
+version: '3.8'
+services: #container names & commands they will run by default -rm is used
+    mongobd:
+        image: 'mongo'
+        volumes:
+            - data:/data/db #for container internal path
+        environment: #env varable for mongobd container
+              MONGO_INITDB_ROOT_USERNAME: max
+              MONGO_INITDB_ROOT_PASSWORD: secret
+    backend: #where api lives
+        build: ./backend 
+        ports: 
+            - '3000:80' #host port: internal port node using
+        volumes:
+            - logs:/app/logs
+            - ./backend:/app
+            - /app/node_modules
+        env_file:
+            - ./env/backend.env #if i had env file to put username & password
+        depends_on:
+            - mongobd  
+    frontend:
+        build: ./frontend
+        ports:
+            - '3000:3000'
+        volumes:
+        - ./frontend/src:/app/src
+        stdin_open: true
+        tty: true
+        depends_on:
+            - backend #froneted only runs if backend is running
+volumes:
+    data:
+    logs:
